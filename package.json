@@ -1,0 +1,24 @@
+{
+  "name": "dexter",
+  "version": "1.0.0",
+  "description": "A twitter bot built on node js",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theWeboy/Dexter_NodeBot.git"
+  },
+  "author": "Deepak Bansal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theWeboy/Dexter_NodeBot/issues"
+  },
+  "homepage": "https://github.com/theWeboy/Dexter_NodeBot#readme",
+  "dependencies": {
+    "newsapi": "^2.2.2",
+    "twit": "^2.2.11"
+  }
+}
