@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/theWeboy/Dexter_NodeBot#readme",
   "dependencies": {
+    "iscool": "^1.1.63",
     "newsapi": "^2.2.2",
     "twit": "^2.2.11"
   }
