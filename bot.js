@@ -26,13 +26,13 @@ var config = require('./config');
 var bList = require('./custom_bList');
 
 var T = new Twit(config);
-
+/*
 newsapi.v2.topHeadlines({
-    sources: 'techcrunch,techradar,wired,the-verge,hacker-news',
+    sources: 'techcrunch,techradar,wired,the-verge',
     pageSize: 5
 }).then(response => {
     t_arr = response.articles;
-    //console.log(t_arr);
+    //console.log(t_arr[0]);
     for(var i=0; i<t_arr.length; i++){
         t_url = t_arr[i].url;
         t_name = (t_arr[i].source.name).replace(/ /g,'');
@@ -44,6 +44,8 @@ newsapi.v2.topHeadlines({
         T.post('statuses/update',{status: t_tweet}, tweeted);
     }
 });
+*/
+
 
 //Fetch Top 5 articles every day
 setInterval(
@@ -66,6 +68,7 @@ setInterval(
             }
         })
     },1000*60*60*24);
+
 
 //Setting up user stream
 var stream = T.stream('user');
@@ -90,11 +93,13 @@ stream.on('tweet',tweetEvent);
 function tweetEvent(data) {
     var reply_to = data.in_reply_to_screen_name;
     var text = data.text;
+    var tweet_id = data.id_str;
     var from_u = data.user.screen_name;
 
     if(reply_to === 'dexterrickk'){
         query = text.replace('@dexterrickk','');
         console.log(from_u+' '+reply_to);
+        console.log(tweet_id);
         console.log(query);
         if(isCool(query)){
             newsapi.v2.everything({
@@ -113,15 +118,20 @@ function tweetEvent(data) {
                     query_url = s_arr[0].url;
                     reply = "@"+from_u+" Here you go! This is what I found. Take a look! "+query_url;
                 }
-
                 T.post('statuses/update',{
+                    in_reply_to_status_id: tweet_id,
                     status: reply
                 }, tweeted())
             });
         }
         else{
             reply = "@"+from_u+" Psst! Please don't use bad words!"
+            T.post('statuses/update',{
+                in_reply_to_status_id: tweet_id,
+                status: reply
+            }, tweeted())
         }
+
 
     }
 }
