@@ -3,7 +3,7 @@ console.log("Bot is running");
 const Twit = require('twit');
 
 const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI('Enter NewsAPI key here');
+const newsapi = new NewsAPI('b0321109cb2a473d84d884b790596325');
 
 const createIsCool = require('iscool');
 
@@ -23,6 +23,7 @@ console.log(prev_date);
 
 
 var config = require('./config');
+
 var bList = require('./custom_bList');
 
 var T = new Twit(config);
@@ -38,7 +39,7 @@ newsapi.v2.topHeadlines({
         t_name = (t_arr[i].source.name).replace(/ /g,'');
         // console.log(t_url);
 
-        t_tweet = "New article on #"+t_name+" Check this out! " + t_url;
+        t_tweet = "New article on #"+t_name+" Check this out!\n"+ t_arr[i].title+ ' ' + t_url;
 
         //console.log(t_tweet);
         T.post('statuses/update',{status: t_tweet}, tweeted);
@@ -55,13 +56,13 @@ setInterval(
             pageSize: 5
         }).then(response => {
             t_arr = response.articles;
-            //console.log(t_arr);
+            console.log(t_arr);
             for(var i=0; i<t_arr.length; i++){
                 t_url = t_arr[i].url;
                 t_name = (t_arr[i].source.name).replace(/ /g,'');
                 // console.log(t_url);
 
-                t_tweet = "New article on #"+t_name+" Check this out! " + t_url;
+                t_tweet = "New article on #"+t_name+" Check this out!\n"+ t_arr[i].title + t_url;
 
                 //console.log(t_tweet);
                 T.post('statuses/update',{status: t_tweet}, tweeted);
@@ -69,7 +70,7 @@ setInterval(
         })
     },1000*60*60*24);
 
-
+/*
 //Setting up user stream
 var stream = T.stream('user');
 
@@ -98,7 +99,7 @@ function tweetEvent(data) {
 
     if(reply_to === 'dexterrickk'){
         query = text.replace('@dexterrickk','');
-        console.log(from_u+' '+reply_to);
+        console.log('from : '+ from_u +' to : '+reply_to);
         console.log(tweet_id);
         console.log(query);
         if(isCool(query)){
@@ -125,7 +126,7 @@ function tweetEvent(data) {
             });
         }
         else{
-            reply = "@"+from_u+" Psst! Please don't use bad words!"
+            reply = "@"+from_u+" Psst! Please don't use bad words!";
             T.post('statuses/update',{
                 in_reply_to_status_id: tweet_id,
                 status: reply
@@ -135,7 +136,7 @@ function tweetEvent(data) {
 
     }
 }
-
+*/
 function tweeted(err, data, response) {
     if(err){
         console.log("An error occurred");
@@ -146,6 +147,7 @@ function tweeted(err, data, response) {
 }
 
 // Add extra words in blacklist
+
 var isCool = createIsCool({
     customBlacklist: bList,
     logger: console
