@@ -52,7 +52,7 @@ newsapi.v2.topHeadlines({
 setInterval(
     function () {
         newsapi.v2.topHeadlines({
-            sources: 'techcrunch,techradar,wired,the-verge,hacker-news',
+            sources: 'techcrunch,techradar,wired,the-verge',
             pageSize: 5
         }).then(response => {
             t_arr = response.articles;
@@ -62,7 +62,7 @@ setInterval(
                 t_name = (t_arr[i].source.name).replace(/ /g,'');
                 // console.log(t_url);
 
-                t_tweet = "New article on #"+t_name+" Check this out!\n"+ t_arr[i].title + t_url;
+                t_tweet = "New article on #"+t_name+" Check this out!\n"+ t_arr[i].title + ' ' + t_url;
 
                 //console.log(t_tweet);
                 T.post('statuses/update',{status: t_tweet}, tweeted);
